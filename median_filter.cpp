@@ -34,15 +34,17 @@ vector<int> applyMedianFilter(const vector<int>& input, int Size) {
 int main(int argc, char* argv[]) {
     setlocale(LC_ALL, "Russian");
 
+    // Проверка на наличие аргумента командной строки
     if (argc != 2) {
-        cout << "Ошибка: Неверное количество аргументов." << endl;
+        cout << "Ошибка: Ожидается один аргумент командной строки." << endl;
         return 1;
     }
 
     int Size = stoi(argv[1]);
 
+    // Проверка корректности введенного размера окна
     if (Size % 2 == 0 || Size <= 0) {
-        cout << "Ошибка: Размер окна должен быть положительным нечетным числом." << endl;
+        cout << "Ошибка: Некорректный размер окна." << endl;
         return 1;
     }
 
@@ -53,9 +55,16 @@ int main(int argc, char* argv[]) {
         inputData.push_back(value);
     }
 
+    // Проверка успешности чтения из стандартного ввода
+    if (cin.eof()) {
+        cout << "Ошибка: Не удалось прочитать данные из стандартного ввода." << endl;
+        return 1;
+    }
+
     // Применение медианных фильтров
     vector<int> result = applyMedianFilter(inputData, Size);
 
+    // Вывод результатов в стандартный вывод
     for (int val : result) {
         cout.write(reinterpret_cast<const char*>(&val), sizeof(int));
     }
@@ -64,17 +73,16 @@ int main(int argc, char* argv[]) {
     // Закомментированный блок записи в файл (если не требуется)
     /*
     ofstream outputFile("output.bin", ios::binary);
-    if (outputFile.is_open()) {
-        for (int val : result) {
-            outputFile.write(reinterpret_cast<const char*>(&val), sizeof(int));
-        }
-        outputFile.close();
-        cout << "Результат записан в файл: output.bin" << endl;
-    }
-    else {
-        cout << "Ошибка при открытии файла для записи." << endl;
+    if (!outputFile.is_open()) {
+        cout << "Ошибка: Не удалось открыть файл для записи." << endl;
         return 1;
     }
+
+    for (int val : result) {
+        outputFile.write(reinterpret_cast<const char*>(&val), sizeof(int));
+    }
+    outputFile.close();
+    cout << "Результат записан в файл: output.bin" << endl;
     */
 
     return 0;
