@@ -28,7 +28,7 @@
 
 ## Как запустить?
 ```
-./median_filter 3 -o < input.bin
+./median_filter 3 -o < input.bin > output.bin
 ```
 
 3 - размер окна фильтра.
